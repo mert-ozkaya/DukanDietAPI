@@ -11,4 +11,6 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/register', require('./modules/register/router'))
+app.use('/user', require('./modules/register/middlewares/auth'), require('./modules/user/router'))
 module.exports = app;

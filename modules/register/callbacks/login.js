@@ -3,14 +3,14 @@ const settings = require('../../../settings');
 
  function checkEposta(req,res,next) {
 
-     let collection = req.app.get('DB').collection('register');
+     let collection = req.app.get('DB').collection('users');
 
      let query = {email: req.body.email};
 
      let p = collection.findOne(query);
      p.then(result => {
        if(result) {
-         req.data.user = result;
+         req.data.user = result ;
          next();
        }
        else {

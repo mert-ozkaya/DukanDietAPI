@@ -1,8 +1,13 @@
 const validator = require('validator');
 const moment = require('moment');
+const _userInformation = require('../middlewares/user-info')
+
+module.exports = [
+  validationSignup,
+  _userInformation
+]
 
 function validationSignup(req, res, next) {
-
   if(req.body.email === undefined)
     return res.status(400).send('bos-veya-gecersiz-email');
 
@@ -24,26 +29,3 @@ function validationSignup(req, res, next) {
 
   next();
 }
-
-function saveUser(req, res, next) {
-  let user = {
-    account_type: 2,  //1 admin, 2 normal user
-    email: req.body.email,
-    password: req.body.password,
-    created_at: moment().format()
-  };
-
-  let collection = req.app.get('DB').collection('register');
-  let p = collection.insertOne(user);
-  p.then(result => {
-    res.json({
-      message: 'Kayıt başarılı.'
-    })
-  }).catch(error => {
-    res.status(500).json(error);
-  });
-}
-
-
-
-module.exports = [validationSignup,saveUser]

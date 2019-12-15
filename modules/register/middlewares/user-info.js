@@ -17,7 +17,7 @@ function setInfo(req,res,next) {
   let weight = parseInt(req.body.weight)
   let height = parseInt(req.body.height)
   let bone_structure = parseInt(req.body.bone_structure)
-
+  let number_of_pregnancies = parseInt(req.body.number_of_pregnancies)
   let dateArray = req.body.birthdate.split('/')
   let birthYear = dateArray[2] // doğum yılı çekildi
 
@@ -29,6 +29,10 @@ function setInfo(req,res,next) {
 
   let bmi = weight / ((height/100) * (height/100))
 
+  if(parseInt(req.body.gender) == 0) {
+    number_of_pregnancies = 0
+  }
+
   let userInfo = {
     email: req.body.email,
     password: req.body.password,
@@ -39,9 +43,9 @@ function setInfo(req,res,next) {
     weight: weight,
     height: height,
     bone_structure: bone_structure, //kemik yapısı
-    number_of_pregnancies: req.body.number_of_pregnancies, // doğum sayısı
+    number_of_pregnancies: number_of_pregnancies, // doğum sayısı
     bmi: bmi,
-    gender: req.body.gender,
+    gender: parseInt(req.body.gender),
     lost_weight: 0,
     created_at: moment().format()
   }
@@ -79,7 +83,7 @@ function calculateDietProgram(req,res,next) {
       })
     }else if(bmi >= 19 && bmi <= 24){
       res.status(400).json({
-        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız."
+        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız. :)"
       })
     }else if(bmi > 24 && bmi <= 30){
         req.data.userInfo.kiloKategori = 1
@@ -101,7 +105,7 @@ function calculateDietProgram(req,res,next) {
       })
     }else if(bmi >= 20 && bmi <= 25){
       res.status(400).json({
-        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız."
+        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız. :)"
       })
     }else if(bmi > 25 && bmi <= 30){
       req.data.userInfo.kiloKategori = 1
@@ -124,7 +128,7 @@ function calculateDietProgram(req,res,next) {
       })
     }else if(bmi >= 21 && bmi <= 26){
       res.status(400).json({
-        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız."
+        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız. :)"
       })
     }else if(bmi > 26 && bmi <= 30){
       req.data.userInfo.kiloKategori = 1
@@ -148,7 +152,7 @@ function calculateDietProgram(req,res,next) {
       })
     }else if(bmi >= 22 && bmi <= 27){
       res.status(400).json({
-        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız."
+        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız. :)"
       })
     }else if(bmi > 27 && bmi <= 30){
       req.data.userInfo.kiloKategori = 1
@@ -171,7 +175,7 @@ function calculateDietProgram(req,res,next) {
       })
     }else if(bmi >= 23 && bmi <= 28){
       res.status(400).json({
-        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız."
+        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız. :)"
       })
     }else if(bmi > 28 && bmi <= 30){
       req.data.userInfo.kiloKategori = 1
@@ -193,7 +197,7 @@ function calculateDietProgram(req,res,next) {
       })
     }else if(bmi >= 24 && bmi <= 29){
       res.status(400).json({
-        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız."
+        message:"Diyete ihtiyacınız yoktur.Gayet formdasınız. :)"
       })
     }else if(bmi > 29 && bmi <= 30){
       req.data.userInfo.kiloKategori = 1
@@ -213,7 +217,7 @@ function calculateDietProgram(req,res,next) {
 }
 
 function attackPhase(req,res,next) {
-
+  console.log("attackPhase")
     let kiloKategori = req.data.userInfo.kiloKategori
 
       req.data.userInfo.attachPhase = {}
@@ -239,6 +243,7 @@ function attackPhase(req,res,next) {
 
 
 function cruisePhase(req,res,next){
+    console.log("cruisePhase")
   req.data.userInfo.cruisePhase = {}
 
   let toplamVerilecekKilo = req.data.userInfo.toplamVerilecekKilo
@@ -252,6 +257,7 @@ function cruisePhase(req,res,next){
 }
 
 function consolidationPhase(req,res, next){
+      console.log("consolidationPhase")
   req.data.userInfo.consolidationPhase = {}
 
   let toplamVerilecekKilo = req.data.userInfo.toplamVerilecekKilo
@@ -261,7 +267,7 @@ function consolidationPhase(req,res, next){
 }
 
 function saveGeneralInfo(req,res,next){
-
+        console.log("saveGeneralInfo")
   req.data.userInfo.created_at = moment().format()
 
   let collection = req.app.get('DB').collection('users');
@@ -275,6 +281,7 @@ function saveGeneralInfo(req,res,next){
 }
 
 function createActivities(req,res,next){
+          console.log("createActivities")
     let array = []
     let atakEvreSuresi = req.data.userInfo.attachPhase.durationOfUniverse
     let seyirEvreSuresi =  req.data.userInfo.cruisePhase.durationOfUniverse

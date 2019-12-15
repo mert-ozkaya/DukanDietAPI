@@ -1,8 +1,8 @@
 module.exports = function(req,res) {
 
   if("phase" in req.query){
+    
     let phase = req.query.phase
-
     let filter = {'phase': parseInt(phase) }
 
     let collection = req.app.get('DB').collection('recommendation');

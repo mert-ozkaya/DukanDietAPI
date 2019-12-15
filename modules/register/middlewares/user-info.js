@@ -376,7 +376,7 @@ function createActivities(req,res,next){
     let collection = req.app.get('DB').collection('activities');
     let p = collection.insertMany(array);
     p.then(result => {
-      res.status(200).send("Kayıt başarıyla oluşturuldu.")
+      res.send("Kayıt başarıyla oluşturuldu.")
     }).catch(error => {
       res.status(500).json(error);
     });

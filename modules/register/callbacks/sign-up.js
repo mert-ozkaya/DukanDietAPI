@@ -8,6 +8,7 @@ module.exports = [
 ]
 
 function validationSignup(req, res, next) {
+  console.log(req.body)
   if(req.body.email === undefined)
     return res.status(400).send('bos-veya-gecersiz-email');
 

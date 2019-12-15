@@ -4,5 +4,5 @@ const _auth = require('../register/middlewares/auth')
 
 router.get('/', _auth, require('./callbacks/get-activity'))
 router.get('/list', _auth, require('./callbacks/list'))
-router.post('/update/:_id',_auth, require('./callbacks/update_activity'))
+router.post('/update/:_id([a-fA-F0-9]{24})',_auth, require('./callbacks/update_activity'))
 module.exports = router;
